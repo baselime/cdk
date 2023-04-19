@@ -38,7 +38,7 @@ export class Query extends cdk.CustomResource {
 				'BaselimeApiKey is missing, make sure you call initBaselime({ baselimeApiKey: "xxxxxxxxxxxx"',
 			);
 		}
-
+        
 		super(scope, id, {
 			resourceType: "Custom::BaselimeQuery",
 			serviceToken: _serviceToken,
