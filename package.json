@@ -1,0 +1,28 @@
+{
+  "name": "@baselime/orl-cdk",
+  "version": "0.0.1",
+  "description": "Define your observability as code using the AWS CDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baselime/orl-cdk.git"
+  },
+  "keywords": [
+    "AWS",
+    "O11y",
+    "Observability",
+    "CDK",
+    "Queries",
+    "Alerts",
+    "Dashboards"
+  ],
+  "author": "Thomas Ankcorn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baselime/orl-cdk/issues"
+  },
+  "homepage": "https://github.com/baselime/orl-cdk#readme"
+}
