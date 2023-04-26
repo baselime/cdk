@@ -1,9 +1,11 @@
 {
-  "name": "@baselime/orl-cdk",
+  "name": "@baselime/cdk",
   "version": "0.0.1",
   "description": "Define your observability as code using the AWS CDK",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,12 +27,18 @@
     "url": "https://github.com/baselime/orl-cdk/issues"
   },
   "homepage": "https://github.com/baselime/orl-cdk#readme",
-  "dependencies": {
-    "aws-cdk-lib": "^2.0.0",
-    "constructs": "^10.2.1"
-  },
   "peerDependencies": {
     "aws-cdk-lib": "^2.0.0",
-    "constructs": "^10.2.1"
+    "constructs": "10.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.1",
+    "aws-cdk-lib": "^2.0.0",
+    "typescript": "^5.0.4"
+  },
+  "overrides": {
+    "tsup": {
+      "rollup": "3.20.4"
+    }
   }
 }
