@@ -55,6 +55,7 @@ export  class Query<TKey extends string> extends CfnResource {
 				Parameters,
 			},
 		});
+		this.addPropertyOverride
 		this.id = id;
 	}
 
@@ -71,7 +72,12 @@ export  class Query<TKey extends string> extends CfnResource {
 		}
 
 		new Alert(`${this.id}-alert`, alertProps);
+	}
 
+	addFilters(filters: []) {
+		const existingFilters = this.getAtt('Parameters.filters');
+		console.log(existingFilters)
+		this.addOverride('Parameters.filters', [...filters ])
 	}
 };
 
