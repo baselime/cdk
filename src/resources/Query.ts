@@ -31,6 +31,7 @@ export function stringifyFilter(filter: Filter): string {
 
 export  class Query<TKey extends string> extends CfnResource {
 	id: string;
+	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
 		const stack = cdk.Stack.of(ConfigStore.construct);
 		
@@ -51,12 +52,13 @@ export  class Query<TKey extends string> extends CfnResource {
 				serviceToken: ConfigStore.serviceToken,
 				BaselimeApiKey: ConfigStore.baselimeSecret,
 				Description: props.description,
-				Service: stack.stackName,
+				Service:  stack.tags.tagValues()["sst:app"] || stack.stackName,
 				Parameters,
 			},
 		});
 		this.addPropertyOverride
 		this.id = id;
+		this.props = props;
 	}
 
 	addAlert(alert: ChangeFields<AlertProps, { 
