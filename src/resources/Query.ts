@@ -75,8 +75,7 @@ export  class Query<TKey extends string> extends CfnResource {
 	}
 
 	addFilters(filters: QueryProps<string>["parameters"]["filters"]) {
-		const existingFilters = this.getAtt('Parameters.filters');
-		console.log(existingFilters)
+		
 		this.addPropertyOverride('Parameters.filters', [...filters ])
 	}
 };
