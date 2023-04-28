@@ -34,7 +34,7 @@ export  class Query<TKey extends string> extends CfnResource {
 	constructor(id: string, props: QueryProps<TKey>) {
 		const stack = cdk.Stack.of(ConfigStore.construct);
 		
-		const groupByOptions = props.parameters.calculations.map(calc => calc.alias || calc.key || calc.operation);
+		const groupByOptions = props.parameters.calculations?.map(calc => calc.alias || calc.key || calc.operation);
 
 		if(props.parameters.groupBy && !groupByOptions.includes(props.parameters.groupBy.value)) {
 			throw Error("groupBy.value must be value of either alias, key, or operation")
