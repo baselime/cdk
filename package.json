@@ -1,6 +1,6 @@
 {
   "name": "@baselime/cdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Define your observability as code using the AWS CDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^18.16.1",
     "aws-cdk-lib": "^2.0.0",
+    "ts-toolbelt": "^9.6.0",
     "typescript": "^5.0.4"
   },
   "overrides": {

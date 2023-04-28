@@ -17,5 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./resources/Query"), exports);
 __exportStar(require("./resources/Alert"), exports);
 __exportStar(require("./resources/Dashboard"), exports);
-__exportStar(require("./GlobalConfig"), exports);
+__exportStar(require("./Config"), exports);
 //# sourceMappingURL=index.js.map

@@ -16,4 +16,4 @@ export interface QueryProps {
 export * from "./resources/Query";
 export * from "./resources/Alert";
 export * from "./resources/Dashboard";
-export * from "./GlobalConfig";
+export * from "./Config";
