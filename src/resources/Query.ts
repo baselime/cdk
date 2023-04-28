@@ -51,7 +51,7 @@ export  class Query<TKey extends string> extends CfnResource {
 		super(ConfigStore.construct, id, {
 			type: "Custom::BaselimeQuery",
 			properties: {
-				serviceToken: ConfigStore.serviceToken,
+				ServiceToken: ConfigStore.serviceToken,
 				BaselimeApiKey: ConfigStore.baselimeSecret,
 				Description: props.description,
 				Service:  stack.tags.tagValues()["sst:app"] || stack.stackName,
