@@ -55,6 +55,7 @@ export  class Query<TKey extends string> extends CfnResource {
 				Parameters,
 			},
 		});
+		this.id = id;
 	}
 
 	addAlert(alert: ChangeFields<AlertProps, { 
