@@ -1,5 +1,4 @@
 export type AlertProps = {
-	name?: string;
 	description?: string;
 	enabled: boolean;
 	parameters: DeploymentAlertParameters;

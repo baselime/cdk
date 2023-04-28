@@ -1,5 +1,4 @@
 export type DashboardProps = {
-	name?: string;
 	description?: string;
 	parameters: DeploymentDashboardParameters;
 };
