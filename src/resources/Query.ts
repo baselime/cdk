@@ -46,6 +46,8 @@ export  class Query<TKey extends string> extends CfnResource {
 			calculations: props.parameters.calculations ? props.parameters.calculations.map(buildCalculation) : [],
 			filters: props.parameters.filters.map(stringifyFilter)
 		};
+
+		console.log(stack.tags.tagValues())
 		super(ConfigStore.construct, id, {
 			type: "Custom::BaselimeQuery",
 			properties: {
@@ -56,7 +58,6 @@ export  class Query<TKey extends string> extends CfnResource {
 				Parameters,
 			},
 		});
-		this.addPropertyOverride
 		this.id = id;
 		this.props = props;
 	}
