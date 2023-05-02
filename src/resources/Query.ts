@@ -1,5 +1,5 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { ConfigStore } from "../Config";
+import { Config } from "../Config";
 
 import { QueryParameters, QueryProps, Filter } from "../types/Query";
 import { AlertProps } from "../types/Alert";
@@ -33,7 +33,7 @@ export  class Query<TKey extends string> extends CfnResource {
 	id: string;
 	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
-		const stack = Stack.of(ConfigStore.construct);
+		const stack = Stack.of(Config.construct);
 		
 		const groupByOptions = props.parameters.calculations?.map(calc => calc.alias || calc.key || calc.operation);
 
@@ -48,11 +48,11 @@ export  class Query<TKey extends string> extends CfnResource {
 		};
 
 		console.log(stack.tags.tagValues())
-		super(ConfigStore.construct, id, {
+		super(Config.construct, id, {
 			type: "Custom::BaselimeQuery",
 			properties: {
-				ServiceToken: ConfigStore.serviceToken,
-				BaselimeApiKey: ConfigStore.baselimeSecret,
+				ServiceToken: Config.serviceToken,
+				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
 				Service:  stack.tags.tagValues()["sst:app"] || stack.stackName,
 				Parameters,

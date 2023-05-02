@@ -4,7 +4,7 @@ Baselime CDK is the best way to instrument a CDK application. It lets you define
 
 
 ```typescript
-baselime.ConfigStore.init(stack, {
+baselime.Config.init(stack, {
   apiKey: 'xxxxxx',
 });
 
@@ -28,8 +28,8 @@ npm i @baselime/cdk
 Get your baselime api key from the dashboard or run `baselime iam` 
 
 ```typescript
-// Initialize ConfigStore, you must do this in a construct before adding querys, alerts and dashboards.
-baselime.ConfigStore.init(stack, {
+// Initialize Config, you must do this in a construct before adding querys, alerts and dashboards.
+baselime.Config.init(stack, {
   apiKey: 'xxxxxx',
 });
 

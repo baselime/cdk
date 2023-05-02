@@ -1,17 +1,17 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { ConfigStore } from "../Config";
+import { Config } from "../Config";
 
 import { AlertProps } from "../types/Alert";
 
 export class Alert extends CfnResource {
 	constructor(id: string, props: AlertProps) {
-		const stack = Stack.of(ConfigStore.construct);
+		const stack = Stack.of(Config.construct);
 
-		super(ConfigStore.construct, id, {
+		super(Config.construct, id, {
 			type: "Custom::BaselimeAlert",
 			properties: {
-				ServiceToken: ConfigStore.serviceToken,
-				BaselimeApiKey: ConfigStore.baselimeSecret,
+				ServiceToken: Config.serviceToken,
+				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
 				Service: stack.stackName,
 				Parameters: props.parameters
