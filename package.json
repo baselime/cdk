@@ -1,6 +1,6 @@
 {
   "name": "@baselime/cdk",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Define your observability as code using the AWS CDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/baselime/orl-cdk#readme",
   "peerDependencies": {
     "aws-cdk-lib": "^2.0.0",
-    "constructs": "10.2.6"
+    "constructs": "^10.0.6"
   },
   "devDependencies": {
     "@types/node": "^18.16.1",
