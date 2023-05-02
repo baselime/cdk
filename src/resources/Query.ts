@@ -1,6 +1,6 @@
-import { CfnResource } from "aws-cdk-lib";
+import { CfnResource, Stack } from "aws-cdk-lib";
 import { ConfigStore } from "../Config";
-import * as cdk from "aws-cdk-lib/core";
+
 import { QueryParameters, QueryProps, Filter } from "../types/Query";
 import { AlertProps } from "../types/Alert";
 import { Alert } from './Alert';
@@ -33,7 +33,7 @@ export  class Query<TKey extends string> extends CfnResource {
 	id: string;
 	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
-		const stack = cdk.Stack.of(ConfigStore.construct);
+		const stack = Stack.of(ConfigStore.construct);
 		
 		const groupByOptions = props.parameters.calculations?.map(calc => calc.alias || calc.key || calc.operation);
 

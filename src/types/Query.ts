@@ -1,4 +1,5 @@
 import { F } from "ts-toolbelt";
+
 export type QueryProps<TKey extends string> = {
 	description?: string;
 	parameters:
