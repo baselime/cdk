@@ -56,6 +56,7 @@ export  class Query<TKey extends string> extends CfnResource {
 				Description: props.description,
 				Service:  stack.tags.tagValues()["sst:app"] || stack.stackName,
 				Parameters,
+				Origin: "cdk"
 			},
 		});
 		this.id = id;

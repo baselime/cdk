@@ -14,7 +14,8 @@ export class Alert extends CfnResource {
 				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
 				Service: stack.stackName,
-				Parameters: props.parameters
+				Parameters: props.parameters,
+				Origin: "cdk"
 			},
 		});
 	}

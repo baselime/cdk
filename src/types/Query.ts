@@ -46,11 +46,15 @@ type Datasets =
 export type Calculation<TKey extends string> =
 	| BaseCalculationObject<TKey>
 	| CountCalculation<TKey>;
-export type Filter = {
-	key: string;
-	operation: QueryOperationString;
-	value: string | number | boolean;
-};
+
+export type Filter =
+	| { key: string; operation: QueryOperationArray; value: string[] }
+	| { key: string; operation: QueryOperationNull; value?: never }
+	| {
+			key: string;
+			operation: QueryOperationString;
+			value: string | number | boolean;
+	  };
 export type QueryOperationString =
 	| "="
 	| "!="
@@ -63,11 +67,11 @@ export type QueryOperationString =
 	| "INCLUDES"
 	| "MATCH_REGEX"
 	| "DOES_NOT_INCLUDE"
-	| "EXISTS"
-	| "DOES_NOT_EXIST"
-	| "IN"
-	| "NOT_IN"
 	| "STARTS_WITH";
+
+export type QueryOperationArray = "IN" | "NOT_IN";
+
+export type QueryOperationNull = "EXISTS" | "DOES_NOT_EXIST";
 
 type BaseCalculationObject<TKey> = {
 	operation:
@@ -93,7 +97,11 @@ type BaseCalculationObject<TKey> = {
 	alias?: TKey;
 };
 
-type CountCalculation<TKey> = { operation: TKey extends "COUNT" ? TKey : string; alias?: TKey, key?: never };
+type CountCalculation<TKey> = {
+	operation: TKey extends "COUNT" ? TKey : string;
+	alias?: TKey;
+	key?: never;
+};
 
 export type QueryParameters = {
 	datasets: string[];
