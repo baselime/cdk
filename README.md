@@ -67,7 +67,7 @@ new baselime.Alert('MyAlert', {
   enabled: true,
   parameters: {
     frequency: '30mins',
-    query: query.ref,
+    query: query,
     threshold: '> 10',
     window: '1 hour',
   },
@@ -79,7 +79,7 @@ new baselime.Dashboard('MyDashboard', {
   parameters: {
     widgets: [
       {
-        query: query.ref,
+        query: query,
         view: 'events',
       },
     ],

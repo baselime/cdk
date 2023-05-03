@@ -29,7 +29,7 @@ export function stringifyFilter(filter: Filter): string {
   }
 
 
-export  class Query<TKey extends string> extends CfnResource {
+export class Query<TKey extends string> extends CfnResource {
 	id: string;
 	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
@@ -71,7 +71,7 @@ export  class Query<TKey extends string> extends CfnResource {
 			...alert,
 			parameters: {
 				...alert.parameters,
-				query: this.ref
+				query: this
 			}
 		}
 

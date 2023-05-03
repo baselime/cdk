@@ -1,3 +1,5 @@
+import { CfnResource } from "aws-cdk-lib";
+
 export type AlertProps = {
 	description?: string;
 	enabled: boolean;
@@ -8,7 +10,7 @@ export type AlertProps = {
 type ChannelTypes = "slack" | "webhook";
 
 type DeploymentAlertParameters = {
-	query: string;
+	query: CfnResource;
 	threshold: string;
 	frequency: string;
 	window: string;
