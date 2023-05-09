@@ -15,6 +15,7 @@ export class Alert extends CfnResource {
 		super(Config.construct, id, {
 			type: "Custom::BaselimeAlert",
 			properties: {
+				id,
 				ServiceToken: Config.serviceToken,
 				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,

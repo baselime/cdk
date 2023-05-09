@@ -16,6 +16,7 @@ export class Dashboard extends CfnResource {
 		super(Config.construct, id, {
 			type: "Custom::BaselimeDashboard",
 			properties: {
+				id, 
 				ServiceToken: Config.serviceToken,
 				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
