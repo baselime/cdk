@@ -2,32 +2,32 @@ import { F } from "ts-toolbelt";
 
 export type QueryProps<TKey extends string> = {
 	description?: string;
-	parameters:
-		| {
-				datasets: Datasets[];
-				filterCombination?: "AND" | "OR";
-				filters: Filter[];
-				needle?: Needle;
-				calculations?: never;
-				groupBy?: never;
-		  }
-		| {
-				datasets: Datasets[];
-				filterCombination?: "AND" | "OR";
-				filters: Filter[];
-				needle?: Needle;
-				calculations: Calculation<TKey>[];
-				groupBy?: {
-					type: "string" | "number" | "boolean";
-					// This doesn't quite work yet. It should be a union of the key in the filters
-					value: F.NoInfer<TKey>;
-					orderBy?: string;
-					limit?: number;
-					order?: "ASC" | "DESC";
-				};
-		  };
+	parameters: QueryParameters<TKey>
 };
 
+export type QueryParameters <TKey extends string>= {
+	datasets?: Datasets[];
+	filterCombination?: "AND" | "OR";
+	filters: Filter[];
+	needle?: Needle;
+	calculations?: never;
+	groupBy?: never;
+}
+| {
+	datasets?: Datasets[];
+	filterCombination?: "AND" | "OR";
+	filters: Filter[];
+	needle?: Needle;
+	calculations: Calculation<TKey>[];
+	groupBy?: {
+		type?: "string" | "number" | "boolean";
+		// This doesn"t quite work yet. It should be a union of the key in the filters
+		value: F.NoInfer<TKey> | "COUNT";
+		orderBy?: string;
+		limit?: number;
+		order?: "ASC" | "DESC";
+	};
+}; 
 type Needle = {
 	value: string;
 	isRegex?: boolean;
@@ -48,13 +48,25 @@ export type Calculation<TKey extends string> =
 	| CountCalculation<TKey>;
 
 export type Filter =
-	| { key: string; operation: QueryOperationArray; value: string[] }
-	| { key: string; operation: QueryOperationNull; value?: never }
+	| { key: Keys; operation: QueryOperationArray; value: string[] }
+	| { key: Keys; operation: QueryOperationNull; value?: never }
 	| {
-			key: string;
-			operation: QueryOperationString;
+			key: Keys;
+			operation?: QueryOperationString;
 			value: string | number | boolean;
 	  };
+
+type Keys =
+	| string
+	| "$baselime.acount"
+	| "$baselime.baselimeId"
+	| "$baselime.namespace"
+	| "$baselime.region"
+	| "$baselime.requestId"
+	| "$baselime.service"
+	| "$baselime.spanId"
+	| "$baselime.traceId";
+
 export type QueryOperationString =
 	| "="
 	| "!="
@@ -98,12 +110,12 @@ type BaseCalculationObject<TKey> = {
 };
 
 type CountCalculation<TKey> = {
-	operation: TKey extends "COUNT" ? TKey : string;
+	operation: TKey extends "COUNT" ? "COUNT" : string;
 	alias?: TKey;
 	key?: never;
 };
 
-export type QueryParameters = {
+export type DeploymentQueryParameters = {
 	datasets: string[];
 	calculations?: string[];
 	filterCombination?: "AND" | "OR";

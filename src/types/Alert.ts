@@ -1,16 +1,25 @@
 import { CfnResource } from "aws-cdk-lib";
+import { QueryOperationString, QueryParameters } from "./Query";
 
-export type AlertProps = {
+export type AlertProps<TKey extends string> = {
 	description?: string;
-	enabled: boolean;
-	parameters: DeploymentAlertParameters;
-	channels: { type: ChannelTypes; targets: string[] }[];
+	enabled?: boolean;
+	parameters: {
+		query: CfnResource | QueryParameters<TKey>,
+		threshold: {
+			operation?: QueryOperationString,
+			value: string | number
+		},
+		frequency?: string,
+		window?: string,
+	};
+	channels?: { type: ChannelTypes; targets: string[] }[];
 };
 
 type ChannelTypes = "slack" | "webhook";
 
-type DeploymentAlertParameters = {
-	query: CfnResource;
+export type DeploymentAlertParameters = {
+	query: string;
 	threshold: string;
 	frequency: string;
 	window: string;

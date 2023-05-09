@@ -1,7 +1,7 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
 import { Config } from "../Config";
 
-import { QueryParameters, QueryProps, Filter } from "../types/Query";
+import { QueryParameters, QueryProps, Filter, DeploymentQueryParameters } from "../types/Query";
 import { AlertProps } from "../types/Alert";
 import { Alert } from './Alert';
 import { getServiceName } from '../utils/ServiceName';
@@ -20,6 +20,9 @@ function buildShortCalculation(cal:  { alias?: string; operation: string; key?: 
 
 export function stringifyFilter(filter: Filter): string {
 	const { key, operation, value } = filter;
+	if(!operation) {
+		return `${key} = ${value}`;
+	}
 	if (["EXISTS", "DOES_NOT_EXIST"].includes(operation)) {
 	  return `${key} ${operation}`;
 	}
@@ -44,10 +47,15 @@ export class Query<TKey extends string> extends CfnResource {
 			throw Error("groupBy.value must be value of either alias, key, or operation")
 		}
 		
-		const Parameters: QueryParameters = {
+		const Parameters: DeploymentQueryParameters = {
 			...props.parameters,
+			datasets: props.parameters.datasets || ['lambda-logs'],
 			calculations: props.parameters.calculations ? props.parameters.calculations.map(buildCalculation) : [],
-			filters: props.parameters.filters.map(stringifyFilter)
+			filters: props.parameters.filters.map(stringifyFilter),
+			groupBy: {
+				...props.parameters.groupBy,
+				type: props.parameters.groupBy?.type || "string"
+			}
 		};
 
 		super(Config.construct, id, {
@@ -66,10 +74,9 @@ export class Query<TKey extends string> extends CfnResource {
 		this.props = props;
 	}
 
-	addAlert(alert: ChangeFields<AlertProps, { 
-		parameters: Omit<AlertProps['parameters'], "query"> 
+	addAlert(alert: ChangeFields<AlertProps<TKey>, { 
+		parameters: Omit<AlertProps<TKey>['parameters'], "query"> 
 	  }>) {
-		
 		const alertProps = {
 			...alert,
 			parameters: {
