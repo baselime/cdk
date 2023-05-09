@@ -1,7 +1,10 @@
 import { Stack } from "aws-cdk-lib";
-
+import { Config } from "../Config";
 
 export function getServiceName(stack: Stack): string {
+    if(Config.serviceName) {
+      return Config.serviceName;
+    }
     const tags = stack.tags.tagValues();
 
     const isSST = Object.keys(tags).some((el) => el.includes("sst"));
@@ -9,6 +12,7 @@ export function getServiceName(stack: Stack): string {
     if (isSST) {
       return `${tags['sst:stage']}-${tags['sst:app']}`;
     }
+
     return stack.stackName;
   }
   
