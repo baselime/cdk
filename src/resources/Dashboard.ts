@@ -2,6 +2,7 @@ import { CfnResource, Stack } from "aws-cdk-lib";
 import { Config } from "../Config";
 
 import { DashboardProps } from "../types/Dashboard";
+import { getServiceName } from "../utils/ServiceName";
 
 export class Dashboard extends CfnResource {
 	constructor(id: string, props: DashboardProps) {
@@ -18,7 +19,7 @@ export class Dashboard extends CfnResource {
 				ServiceToken: Config.serviceToken,
 				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
-				Service: stack.tags.tagValues()["sst:app"] || stack.stackName,
+				Service: getServiceName(stack),
 				Parameters: parameters,
 				Origin: "cdk"
 			},

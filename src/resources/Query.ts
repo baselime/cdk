@@ -4,7 +4,7 @@ import { Config } from "../Config";
 import { QueryParameters, QueryProps, Filter } from "../types/Query";
 import { AlertProps } from "../types/Alert";
 import { Alert } from './Alert';
-
+import { getServiceName } from '../utils/ServiceName';
 function buildCalculation(cal: { alias?: string; operation: string; key?: string}) {
 	const short = buildShortCalculation(cal);
 	return `${short}${cal.alias ? ` as ${cal.alias}` : ""}`;
@@ -28,7 +28,9 @@ export function stringifyFilter(filter: Filter): string {
 	return `${key} ${operation} ${value}`;
   }
 
-
+/**
+ * 
+ */
 export class Query<TKey extends string> extends CfnResource {
 	id: string;
 	props: QueryProps<TKey>
@@ -47,14 +49,13 @@ export class Query<TKey extends string> extends CfnResource {
 			filters: props.parameters.filters.map(stringifyFilter)
 		};
 
-		console.log(stack.tags.tagValues())
 		super(Config.construct, id, {
 			type: "Custom::BaselimeQuery",
 			properties: {
 				ServiceToken: Config.serviceToken,
 				BaselimeApiKey: Config.baselimeSecret,
 				Description: props.description,
-				Service:  stack.tags.tagValues()["sst:app"] || stack.stackName,
+				Service: getServiceName(stack),
 				Parameters,
 				Origin: "cdk"
 			},
