@@ -6,7 +6,7 @@ export type AlertProps<TKey extends string> = {
 	enabled?: boolean;
 	parameters: {
 		query: CfnResource | QueryParameters<TKey>,
-		threshold: {
+		threshold?: {
 			operation?: QueryOperationString,
 			value: string | number
 		},
