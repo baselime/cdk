@@ -1,10 +1,10 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { Config } from "../Config";
+import { Config } from "../config";
 
-import { QueryProps, Filter, DeploymentQueryParameters } from "../types/Query";
-import { AlertProps } from "../types/Alert";
-import { Alert } from './Alert';
-import { getServiceName } from '../utils/ServiceName';
+import { QueryProps, Filter, DeploymentQueryParameters } from "../types/query";
+import { AlertProps } from "../types/alert";
+import { Alert } from './alert';
+import { getServiceName } from '../utils/service-name';
 
 function buildCalculation(cal: { alias?: string; operation: string; key?: string}) {
 	const short = buildShortCalculation(cal);

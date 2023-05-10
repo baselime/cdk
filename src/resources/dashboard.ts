@@ -1,8 +1,8 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { Config } from "../Config";
+import { Config } from "../config";
 
-import { DashboardProps } from "../types/Dashboard";
-import { getServiceName } from "../utils/ServiceName";
+import { DashboardProps } from "../types/dashboard";
+import { getServiceName } from "../utils/service-name";
 
 export class Dashboard extends CfnResource {
 	constructor(id: string, props: DashboardProps) {

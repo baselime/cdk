@@ -1,9 +1,9 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { Config } from "../Config";
-import { Query } from "./Query";
-import { AlertProps, DeploymentAlertParameters } from "../types/Alert";
-import { QueryProps } from "../types/Query";
-import { getServiceName } from "../utils/ServiceName";
+import { Config } from "../config";
+import { Query } from "./query";
+import { AlertProps, DeploymentAlertParameters } from "../types/alert";
+import { QueryProps } from "../types/query";
+import { getServiceName } from "../utils/service-name";
 
 export class Alert<TKey extends string> extends CfnResource {
 	constructor(id: string, props: AlertProps<TKey>) {
@@ -54,9 +54,7 @@ export class Alert<TKey extends string> extends CfnResource {
 				Description: props.description,
 				Service: getServiceName(stack),
 				Parameters,
-				Channels: props.channels || [
-					{ type: "slack", targets: ["baselime-alerts"] },
-				],
+				Channels: props.channels || Config.defaultChannel && [Config.defaultChannel],
 				Origin: "cdk",
 			},
 		});

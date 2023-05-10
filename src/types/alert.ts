@@ -1,5 +1,5 @@
 import { CfnResource } from "aws-cdk-lib";
-import { QueryOperationString, QueryParameters } from "./Query";
+import { QueryOperationString, QueryParameters } from "./query";
 
 export type AlertProps<TKey extends string> = {
 	description?: string;
@@ -13,8 +13,10 @@ export type AlertProps<TKey extends string> = {
 		frequency?: string,
 		window?: string,
 	};
-	channels?: { type: ChannelTypes; targets: string[] }[];
+	channels?: Channel[];
 };
+
+export type Channel = { type: ChannelTypes; targets: string[] }
 
 type ChannelTypes = "slack" | "webhook";
 

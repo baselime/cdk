@@ -1,5 +1,5 @@
 import { Stack } from "aws-cdk-lib";
-import { Config } from "../Config";
+import { Config } from "../config";
 
 export function getServiceName(stack: Stack): string {
     if(Config.serviceName) {

@@ -15,7 +15,11 @@ export interface QueryProps {
 	};
 }
 
-export * from "./resources/Query";
-export * from "./resources/Alert";
-export * from "./resources/Dashboard";
-export * from "./Config";
+export * from "./resources/query";
+export * from "./resources/alert";
+export * from "./resources/dashboard";
+export * from "./config";
+
+export * as filter from "./utils/filter";
+export * as threshold from './utils/threshold';
+export * as calc from './utils/calc';

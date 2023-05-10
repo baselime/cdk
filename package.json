@@ -1,11 +1,11 @@
 {
   "name": "@baselime/cdk",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Define your observability as code using the AWS CDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build",
+    "build": "rm -rf dist && tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
