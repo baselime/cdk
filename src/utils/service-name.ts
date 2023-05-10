@@ -1,5 +1,5 @@
 import { Stack } from "aws-cdk-lib";
-import { Config } from "../config";
+import { Baselime as Config } from "../config";
 
 export function getServiceName(stack: Stack): string {
     if(Config.serviceName) {

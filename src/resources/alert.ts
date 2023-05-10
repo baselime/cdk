@@ -1,5 +1,5 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { Config } from "../config";
+import { Baselime as Config } from "../config";
 import { Query } from "./query";
 import { AlertProps, DeploymentAlertParameters } from "../types/alert";
 import { QueryProps } from "../types/query";

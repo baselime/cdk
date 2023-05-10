@@ -1,5 +1,5 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
-import { Config } from "../config";
+import { Baselime as Config } from "../config";
 
 import { DashboardProps } from "../types/dashboard";
 import { getServiceName } from "../utils/service-name";
