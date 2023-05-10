@@ -8,11 +8,11 @@ baselime.Config.init(stack, {
   apiKey: 'xxxxxx',
 });
 
-const query = new baselime.Query('FunctionErrorCount', {
+new baselime.Alert('FunctionErrors', {
   parameters: {
-    datasets: ['lambda-logs'],
-    calculations: [{operator: "COUNT"}]
-    filters: [{ key "LogLevel", operation: "IN", value: ["ERROR", "WARN"] }],
+    query: {
+      filters: [{ key "LogLevel", operation: "IN", value: ["ERROR", "WARN"] }],
+    }
   },
 });
 

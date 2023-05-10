@@ -35,8 +35,8 @@ export class Alert<TKey extends string> extends CfnResource {
 
 			Parameters = {
 				...props.parameters,
-				threshold: `${props.parameters.threshold.operation || ">"} ${
-					props.parameters.threshold.value
+				threshold: `${props.parameters.threshold?.operation || ">"} ${
+					props.parameters.threshold?.value || 0
 				}`,
 				query: query.ref,
 				frequency: props.parameters.frequency,

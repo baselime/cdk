@@ -1,7 +1,7 @@
 import { CfnResource, Stack } from "aws-cdk-lib";
 import { Config } from "../Config";
 
-import { QueryParameters, QueryProps, Filter, DeploymentQueryParameters } from "../types/Query";
+import { QueryProps, Filter, DeploymentQueryParameters } from "../types/Query";
 import { AlertProps } from "../types/Alert";
 import { Alert } from './Alert';
 import { getServiceName } from '../utils/ServiceName';
