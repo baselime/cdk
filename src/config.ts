@@ -9,7 +9,7 @@ interface BaselimeConfiguration {
 	_account?: string;
 }
 
-export namespace BaselimeConfig {
+export namespace Baselime {
 	export let construct: Construct;
 	export let baselimeSecret: string;
 	export let serviceName: string;
