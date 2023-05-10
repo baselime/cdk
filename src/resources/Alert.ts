@@ -18,8 +18,8 @@ export class Alert<TKey extends string> extends CfnResource {
 					props.parameters.threshold.value
 				}`,
 				query: props.parameters.query.ref,
-				frequency: props.parameters.frequency || "1 hour",
-				window: props.parameters.window || "1 hour",
+				frequency: props.parameters.frequency,
+				window: props.parameters.window,
 			};
 		}
 
@@ -39,8 +39,8 @@ export class Alert<TKey extends string> extends CfnResource {
 					props.parameters.threshold.value
 				}`,
 				query: query.ref,
-				frequency: props.parameters.frequency || "1 hour",
-				window: props.parameters.window || "1 hour",
+				frequency: props.parameters.frequency,
+				window: props.parameters.window,
 			};
 		}
 
