@@ -80,7 +80,6 @@ new baselime.Dashboard('MyDashboard', {
     widgets: [
       {
         query: query,
-        view: 'events',
       },
     ],
   },

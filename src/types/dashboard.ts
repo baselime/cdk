@@ -10,8 +10,5 @@ interface DeploymentDashboardParameters {
 		name?: string;
 		description?: string;
 		query: CfnResource;
-		view: WidgetView;
 	}>;
 }
-
-type WidgetView = "calculations" | "events" | "traces";
