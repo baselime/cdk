@@ -1,6 +1,6 @@
 {
   "name": "@baselime/cdk",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "Define your observability as code using the AWS CDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/baselime/orl-cdk.git"
+    "url": "git+https://github.com/baselime/cdk.git"
   },
   "keywords": [
     "AWS",
@@ -24,9 +24,9 @@
   "author": "Thomas Ankcorn",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/baselime/orl-cdk/issues"
+    "url": "https://github.com/baselime/cdk/issues"
   },
-  "homepage": "https://github.com/baselime/orl-cdk#readme",
+  "homepage": "https://github.com/baselime/cdk#readme",
   "peerDependencies": {
     "aws-cdk-lib": "^2.0.0",
     "constructs": "^10.0.6"
