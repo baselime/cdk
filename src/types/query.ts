@@ -21,9 +21,9 @@ export type QueryParameters <TKey extends string>= {
 	calculations: Calculation<TKey>[];
 	groupBy?: {
 		type?: "string" | "number" | "boolean";
+		value: string;
 		// This doesn"t quite work yet. It should be a union of the key in the filters
-		value: F.NoInfer<TKey> | "COUNT";
-		orderBy?: string;
+		orderBy: F.NoInfer<TKey> | "COUNT";
 		limit?: number;
 		order?: "ASC" | "DESC";
 	};
