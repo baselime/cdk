@@ -47,6 +47,10 @@ export class Query<TKey extends string> extends CfnResource {
 			throw Error("groupBy.orderBy must be value of either alias, key, or operation")
 		}
 		
+		if(!props.disableStackFilter || !Config.disableStackFilter) {
+			props.parameters.filters.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
+		}
+
 		const Parameters: DeploymentQueryParameters = {
 			...props.parameters,
 			datasets: props.parameters.datasets || ['lambda-logs'],

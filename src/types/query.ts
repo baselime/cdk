@@ -3,6 +3,7 @@ import { F } from "ts-toolbelt";
 export type QueryProps<TKey extends string> = {
 	description?: string;
 	parameters: QueryParameters<TKey>
+	disableStackFilter?: boolean
 };
 
 export type QueryParameters <TKey extends string>= {
