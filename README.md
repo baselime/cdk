@@ -1,6 +1,9 @@
 # Baselime CDK
+[![Documentation][docs_badge]][docs]
+[![Latest Release][release_badge]][release]
+[![License][license_badge]][license]
 
-Baselime CDK is the best way to instrument a CDK application. It lets you define complicated Baselime queries as part of a CDK stack with a few lines of Typescript that can be deployed and checked into git with your application. 
+Baselime CDK offers the most effective approach to adding observability to a serverless CDK application.
 
 
 ```typescript
@@ -34,54 +37,56 @@ baselime.Config.init(stack, {
 });
 
 // Create Query
-const query = new baselime.Query("my-super-duper-query", {
+const query = new baselime.Query("ColdStarts", {
   description: "optional",
   parameters: {
     datasets: [
       "lambda-logs",
     ],
     calculations: [
-      { operation: "MAX", key: "oeurhg", alias: "test" } // for COUNT, there's no key
+      max("@initDuration"),
+      p90("@initDuration"),
+      min("@initDuration"),
     ],
     filters: [
-      { key: "userId", operation: "INCLUDES", value: ["yo", "12"] },
-      { key: "userId", operation: "EQUALS", value: "TEST" }, // the value depends on the operation
+      eq("@type", "REPORT"),
     ],
-    groupBy: {
-      type: "string",
-      value: "test",
-      limit: 10
-      orderBy: "test",
-      order: "DESC",
-    },
-    needle: {
-      value: "yototo"
-      isRegex: false,
-      matchCase: false
-    }
   }
 });
 
-// Create Alert
-new baselime.Alert('MyAlert', {
+// Add an alert
+query.addAlert({
   enabled: true,
   parameters: {
     frequency: '30mins',
-    query: query,
-    threshold: '> 10',
+    threshold: gt(500),
     window: '1 hour',
   },
   channels: [{ targets: ['baselime-alerts'], type: 'slack' }],
 });
 
 // Create Dashboard
-new baselime.Dashboard('MyDashboard', {
+new baselime.Dashboard('ServiceHealth', {
   parameters: {
-    widgets: [
-      {
-        query: query,
-      },
-    ],
+    widgets: [{ query: query, }],
   },
 });
 ```
+
+## License
+
+&copy; Baselime Limited, 2023
+
+Distributed under MIT License (`The MIT License`).
+
+See [LICENSE](LICENSE) for more information.
+
+<!-- Badges -->
+
+[docs]: https://baselime.io/docs/
+[docs_badge]: https://img.shields.io/badge/docs-reference-blue.svg?style=flat-square
+[release]: https://github.com/baselime/cdk/releases/latest
+[release_badge]: https://img.shields.io/github/release/baselime/cdk.svg?style=flat-square&ghcache=unused
+[license]: https://opensource.org/licenses/MIT
+[license_badge]: https://img.shields.io/github/license/baselime/cdk.svg?color=blue&style=flat-square&ghcache=unused
+
