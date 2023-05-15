@@ -122,7 +122,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/Baselime/cli/releases/tag/v${{ steps.tag_name.outputs.current_version }}|https://github.com/Baselime/cli/releases/tag/v${{ steps.tag_name.outputs.current_version }}>"
+                    "text": "<https://github.com/Baselime/cdk/releases/tag/v${{ steps.tag_name.outputs.current_version }}|https://github.com/Baselime/cdk/releases/tag/v${{ steps.tag_name.outputs.current_version }}>"
                   }
                 }
               ]
