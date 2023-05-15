@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- search helper fucntion for query needles
 ## [0.0.35] 2022-05-15
 
 ### Added
