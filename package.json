@@ -34,7 +34,8 @@
     "@types/node": "^18.16.1",
     "aws-cdk-lib": "^2.0.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "aws-sdk": "^2.1081.0"
   },
   "overrides": {
     "tsup": {
