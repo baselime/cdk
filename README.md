@@ -11,14 +11,16 @@ baselime.Config.init(stack, {
   apiKey: 'xxxxxx',
 });
 
-new baselime.Alert('FunctionErrors', {
+new Alert("service-errors", {
   parameters: {
     query: {
-      filters: [{ key "LogLevel", operation: "IN", value: ["ERROR", "WARN"] }],
-    }
+      filters: [
+        filter.inArray("LogLevel", ["ERROR", "WARN"]),
+      ],
+    },
+    channels: [{ type: "slack", targets: ["baselime-alerts"] }]
   },
 });
-
 ```
 
 ## Installation
