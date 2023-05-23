@@ -18,7 +18,7 @@ export type AlertProps<TKey extends string> = {
 
 export type Channel = { type: ChannelTypes; targets: string[] }
 
-type ChannelTypes = "slack" | "webhook";
+type ChannelTypes = "slack" | "webhook" | "email";
 
 export type DeploymentAlertParameters = {
 	query: string;
