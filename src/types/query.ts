@@ -37,7 +37,7 @@ type Needle = {
 };
 
 export type QueryGroupBy = {
-	type: "string" | "number" | "boolean";
+	type?: "string" | "number" | "boolean";
 	value: string;
 }
 
