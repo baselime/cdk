@@ -42,10 +42,10 @@ interface BaselimeConfiguration {
 export namespace Baselime {
 	let construct: Construct;
 	let baselimeSecret: string;
-	let serviceName: string;
+	let serviceName: string | undefined;
 	let serviceToken: string;
-	let defaultChannel: Channel;
-	let disableStackFilter: boolean
+	let defaultChannel: Channel | undefined;
+	let disableStackFilter: boolean | undefined;
 
 	/**
 	 * Initialize Baselime CDK. Make sure to use this method in the beginning of the stack.

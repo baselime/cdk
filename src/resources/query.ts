@@ -56,19 +56,19 @@ export class Query<TKey extends string> extends CfnResource {
 			throw Error("Aliases must me unique across all calculations / visualisations.")
 		}
 
-		if (props.parameters.orderBy && !orderByOptions.includes(props.parameters.orderBy.value)) {
+		if (props.parameters.orderBy && !orderByOptions?.includes(props.parameters.orderBy.value)) {
 			throw Error("The orderBy must be present in the calculations / visualisations.")
 		}
 
 		if (!props.disableStackFilter || !Config.getDisableStackFilter()) {
-			props.parameters.filters.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
+			props.parameters.filters?.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
 		}
 
 		const Parameters: DeploymentQueryParameters = {
 			...props.parameters,
 			datasets: props.parameters.datasets || ['lambda-logs'],
 			calculations: props.parameters.calculations ? props.parameters.calculations.map(buildCalculation) : [],
-			filters: props.parameters.filters.map(stringifyFilter),
+			filters: props.parameters.filters?.map(stringifyFilter),
 			groupBys: props.parameters.groupBys?.map(groupBy => {
 				return {
 					...groupBy,
@@ -109,8 +109,7 @@ export class Query<TKey extends string> extends CfnResource {
 	}
 
 	addFilters(filters: QueryProps<string>["parameters"]["filters"]) {
-
-		this.addPropertyOverride('Parameters.filters', [...filters])
+		this.addPropertyOverride('Parameters.filters', [...filters || []])
 	}
 };
 

@@ -2,8 +2,9 @@ import { Stack } from "aws-cdk-lib";
 import { Baselime as Config } from "../config";
 
 export function getServiceName(stack: Stack): string {
-  if (Config.getServiceName()) {
-    return Config.getServiceName();
+  const s = Config.getServiceName();
+  if (s) {
+    return s;
   }
   const tags = stack.tags.tagValues();
 
