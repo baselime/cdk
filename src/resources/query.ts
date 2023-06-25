@@ -6,31 +6,39 @@ import { AlertProps } from "../types/alert";
 import { Alert } from './alert';
 import { getServiceName } from '../utils/service-name';
 
-function buildCalculation(cal: { alias?: string; operation: string; key?: string}) {
+function buildCalculation(cal: { alias?: string; operation: string; key?: string }) {
 	const short = buildShortCalculation(cal);
 	return `${short}${cal.alias ? ` as ${cal.alias}` : ""}`;
 }
 
-function buildShortCalculation(cal:  { alias?: string; operation: string; key?: string}) {
+function hasDuplicates<T>(array: T[]) {
+	return (new Set(array)).size !== array.length;
+}
+
+function buildShortCalculation(cal: { alias?: string; operation: string; key?: string }) {
 	if (cal.operation === "COUNT") {
 		return cal.operation;
 	}
 	return `${cal.operation}(${cal.key})`;
 }
 
+function getCalculationAlias(cal: { alias?: string; operation: string; key?: string }) {
+	return cal.alias ? cal.alias : buildShortCalculation(cal);
+}
+
 export function stringifyFilter(filter: Filter): string {
 	const { key, operation, value } = filter;
-	if(!operation) {
+	if (!operation) {
 		return `${key} = ${value}`;
 	}
 	if (["EXISTS", "DOES_NOT_EXIST"].includes(operation)) {
-	  return `${key} ${operation}`;
+		return `${key} ${operation}`;
 	}
 	if (["IN", "NOT_IN"].some(o => o === operation)) {
-	  return `${key} ${operation} (${value})`;
+		return `${key} ${operation} (${value})`;
 	}
 	return `${key} ${operation} ${value}`;
-  }
+}
 
 /**
  * 
@@ -40,14 +48,19 @@ export class Query<TKey extends string> extends CfnResource {
 	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
 		const stack = Stack.of(Config.construct);
-		
-		const groupByOptions = props.parameters.calculations?.map(calc => calc.alias || calc.key || calc.operation);
 
-		if(props.parameters.groupBy && !groupByOptions.includes(props.parameters.groupBy.orderBy)) {
-			throw Error("groupBy.orderBy must be value of either alias, key, or operation")
+		const calcs = props.parameters.calculations;
+		const orderByOptions = calcs?.map(cal => getCalculationAlias(cal));
+
+		if (calcs?.length && hasDuplicates(calcs.filter(c => c.alias).map(c => c.alias))) {
+			throw Error("Aliases must me unique across all calculations / visualisations.")
 		}
-		
-		if(!props.disableStackFilter || !Config.disableStackFilter) {
+
+		if (props.parameters.orderBy && !orderByOptions.includes(props.parameters.orderBy.value)) {
+			throw Error("The orderBy must be present in the calculations / visualisations.")
+		}
+
+		if (!props.disableStackFilter || !Config.disableStackFilter) {
 			props.parameters.filters.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
 		}
 
@@ -56,10 +69,13 @@ export class Query<TKey extends string> extends CfnResource {
 			datasets: props.parameters.datasets || ['lambda-logs'],
 			calculations: props.parameters.calculations ? props.parameters.calculations.map(buildCalculation) : [],
 			filters: props.parameters.filters.map(stringifyFilter),
-			groupBy: {
-				...props.parameters.groupBy,
-				type: props.parameters.groupBy?.type || "string"
-			}
+			groupBys: props.parameters.groupBys?.map(groupBy => {
+				return {
+					...groupBy,
+					type: groupBy?.type || "string"
+				}
+			}),
+			filterCombination: props.parameters.filterCombination || "AND",
 		};
 
 		super(Config.construct, id, {
@@ -78,9 +94,9 @@ export class Query<TKey extends string> extends CfnResource {
 		this.props = props;
 	}
 
-	addAlert(alert: ChangeFields<AlertProps<TKey>, { 
-		parameters: Omit<AlertProps<TKey>['parameters'], "query"> 
-	  }>) {
+	addAlert(alert: ChangeFields<AlertProps<TKey>, {
+		parameters: Omit<AlertProps<TKey>['parameters'], "query">
+	}>) {
 		const alertProps = {
 			...alert,
 			parameters: {
@@ -93,8 +109,8 @@ export class Query<TKey extends string> extends CfnResource {
 	}
 
 	addFilters(filters: QueryProps<string>["parameters"]["filters"]) {
-		
-		this.addPropertyOverride('Parameters.filters', [...filters ])
+
+		this.addPropertyOverride('Parameters.filters', [...filters])
 	}
 };
 

@@ -4,14 +4,22 @@ export interface QueryProps {
 	Service?: string;
 	Parameters: {
 		datasets: string[];
-		calculations: string[];
-		filters: string[];
-		groupBy: {
+		calculations?: string[];
+		filters?: string[];
+		groupBys?: Array<{
+			type: "string" | "number" | "boolean";
 			value: string;
-			type: string;
-			orderBy: string;
-			limit: number;
+		}>;
+		orderBy?: {
+			value: string;
+			order?: "ASC" | "DESC";
 		};
+		limit?: number;
+		needle?: {
+			value: string;
+			isRegex?: boolean;
+			matchCase?: boolean;
+		}
 	};
 }
 

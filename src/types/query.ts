@@ -6,34 +6,40 @@ export type QueryProps<TKey extends string> = {
 	disableStackFilter?: boolean
 };
 
-export type QueryParameters <TKey extends string>= {
+export type QueryParameters<TKey extends string> = {
 	datasets?: Datasets[];
 	filterCombination?: "AND" | "OR";
 	filters: Filter[];
 	needle?: Needle;
 	calculations?: never;
-	groupBy?: never;
-}
-| {
+	groupBys?: never;
+	orderBy?: never;
+	limit?: number;
+} | {
 	datasets?: Datasets[];
 	filterCombination?: "AND" | "OR";
-	filters: Filter[];
+	filters?: Filter[];
 	needle?: Needle;
-	calculations: Calculation<TKey>[];
-	groupBy?: {
-		type?: "string" | "number" | "boolean";
-		value: string;
+	calculations?: Calculation<TKey>[];
+	groupBys?: QueryGroupBy[];
+	orderBy?: {
 		// This doesn"t quite work yet. It should be a union of the key in the filters
-		orderBy: F.NoInfer<TKey> | "COUNT";
-		limit?: number;
+		value: F.NoInfer<TKey> | "COUNT";
 		order?: "ASC" | "DESC";
 	};
-}; 
+	limit?: number;
+};
+
 type Needle = {
 	value: string;
 	isRegex?: boolean;
 	matchCase?: boolean;
 };
+
+export type QueryGroupBy = {
+	type: "string" | "number" | "boolean";
+	value: string;
+}
 
 type Datasets =
 	| "lambda-logs"
@@ -42,6 +48,7 @@ type Datasets =
 	| "cloudtrail"
 	| "ecs-logs"
 	| "otel"
+	| "apprunner-logs"
 	| "x-ray";
 
 export type Calculation<TKey extends string> =
@@ -52,10 +59,10 @@ export type Filter =
 	| { key: Keys; operation: QueryOperationArray; value: string[] }
 	| { key: Keys; operation: QueryOperationNull; value?: never }
 	| {
-			key: Keys;
-			operation?: QueryOperationString;
-			value: string | number | boolean;
-	  };
+		key: Keys;
+		operation?: QueryOperationString;
+		value: string | number | boolean;
+	};
 
 type Keys =
 	| string
@@ -88,24 +95,24 @@ export type QueryOperationNull = "EXISTS" | "DOES_NOT_EXIST";
 
 type BaseCalculationObject<TKey> = {
 	operation:
-		| "COUNT_DISTINCT"
-		| "MAX"
-		| "MIN"
-		| "SUM"
-		| "AVG"
-		| "MEDIAN"
-		| "P001"
-		| "P01"
-		| "P05"
-		| "P10"
-		| "P25"
-		| "P75"
-		| "P90"
-		| "P95"
-		| "P99"
-		| "P999"
-		| "STDDEV"
-		| "VARIANCE";
+	| "COUNT_DISTINCT"
+	| "MAX"
+	| "MIN"
+	| "SUM"
+	| "AVG"
+	| "MEDIAN"
+	| "P001"
+	| "P01"
+	| "P05"
+	| "P10"
+	| "P25"
+	| "P75"
+	| "P90"
+	| "P95"
+	| "P99"
+	| "P999"
+	| "STDDEV"
+	| "VARIANCE";
 	key: TKey;
 	alias?: TKey;
 };
@@ -119,18 +126,17 @@ type CountCalculation<TKey> = {
 export type DeploymentQueryParameters = {
 	datasets: string[];
 	calculations?: string[];
-	filterCombination?: "AND" | "OR";
+	filterCombination: "AND" | "OR";
 	filters?: string[];
-	groupBy?: {
-		type: "string" | "number" | "boolean";
+	groupBys?: QueryGroupBy[];
+	orderBy?: {
 		value: string;
-		orderBy?: string;
-		limit?: number;
 		order?: "ASC" | "DESC";
 	};
+	limit?: number;
 	needle?: {
 		value: string;
 		isRegex?: boolean;
 		matchCase?: boolean;
-	};
+	}
 };
