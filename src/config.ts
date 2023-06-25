@@ -2,21 +2,71 @@ import { Construct } from "constructs";
 import { Channel } from './types/alert';
 
 interface BaselimeConfiguration {
-	apiKey: string;
-	region?: string;
-	serviceName?: string;
-	defaultChannel?: Channel;
-	disableStackFilter?: boolean
-	_account?: string;
+	/**
+	 * The Baselime API key
+	 */
+	readonly apiKey: string;
+	/**
+	 * The region to deploy this Observability as Code to.
+	 *
+	 * @default - Defaults to the CDK_DEPLOY_REGION environment variable
+	 */
+	readonly region?: string;
+	/**
+	 * The name of this service.
+	 * 
+	 * @default - Defaults to the CDK stack name
+	 */
+	readonly serviceName?: string;
+	/**
+	 * The channel to send all the alerts for this service by default.
+	 */
+	readonly defaultChannel?: Channel;
+	/**
+	 * Wether or not to add a filter on stack name for all the queries created in this service
+	 * When `disableStackFilter` is set to `true`, all queries created in the service will have an additional filter:
+	 * `$baselime.stackId = stackName`
+	 * 
+	 * @default - Defaults to true
+	 */
+	readonly disableStackFilter?: boolean;
+	/**
+	 * The AWS Account ID where Baselime is deployed.
+	 * Change this property only if you have self-deployed the entire Baselime BackEnd
+	 * 
+	 * @default - Defaults to the Baselime AWS Account ID
+	 */
+	readonly _account?: string;
 }
 
 export namespace Baselime {
-	export let construct: Construct;
-	export let baselimeSecret: string;
-	export let serviceName: string;
-	export let serviceToken: string;
-	export let defaultChannel: Channel;
-	export let disableStackFilter: boolean
+	let construct: Construct;
+	let baselimeSecret: string;
+	let serviceName: string;
+	let serviceToken: string;
+	let defaultChannel: Channel;
+	let disableStackFilter: boolean
+
+	/**
+	 * Initialize Baselime CDK. Make sure to use this method in the beginning of the stack.
+	 *
+	 * @param {Construct} target
+	 * @param {BaselimeConfiguration} options
+	 * @example
+	 * import { Baselime } from '@baselime/cdk'
+	 * import * as cdk from 'aws-cdk-lib'
+	 * import { Construct } from 'constructs'
+	 *
+	 * export class ExamplesStack extends cdk.Stack {
+	 *   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+	 *     super(scope, id, props)
+	 *
+	 *     Baselime.init(this, {
+	 *       apiKey: process.env.BASELIME_API_KEY, // Ideally use SSM or Secrets Manager
+	 *       serviceName: 'my-service',
+	 *		 defaultChannel: { type: "slack", targets: ["baselime-alerts"] },
+	 *     });
+	 */
 	export function init(
 		target: Construct,
 		options: BaselimeConfiguration,
@@ -24,10 +74,33 @@ export namespace Baselime {
 		construct = target;
 		baselimeSecret = options.apiKey;
 		serviceName = options.serviceName;
-		serviceToken = `arn:aws:lambda:${
-			options.region || process.env.CDK_DEPLOY_REGION || "eu-west-1"
-		}:${options._account || "097948374213"}:function:baselime-orl-cloudformation`;
+		serviceToken = `arn:aws:lambda:${options.region || process.env.CDK_DEPLOY_REGION || "eu-west-1"
+			}:${options._account || "097948374213"}:function:baselime-orl-cloudformation`;
 		defaultChannel = options.defaultChannel;
 		disableStackFilter = options.disableStackFilter;
+	}
+
+	export function getConstruct() {
+		return construct;
+	}
+
+	export function getApiKey() {
+		return baselimeSecret;
+	}
+
+	export function getServiceName() {
+		return serviceName;
+	}
+
+	export function getServiceToken() {
+		return serviceToken;
+	}
+
+	export function getDefaultChannel() {
+		return defaultChannel;
+	}
+
+	export function getDisableStackFilter() {
+		return disableStackFilter;
 	}
 }

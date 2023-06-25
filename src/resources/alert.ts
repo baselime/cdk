@@ -7,7 +7,7 @@ import { getServiceName } from "../utils/service-name";
 
 export class Alert<TKey extends string> extends CfnResource {
 	constructor(id: string, props: AlertProps<TKey>) {
-		const stack = Stack.of(Config.construct);
+		const stack = Stack.of(Config.getConstruct());
 
 		let Parameters: DeploymentAlertParameters;
 
@@ -44,17 +44,17 @@ export class Alert<TKey extends string> extends CfnResource {
 			};
 		}
 
-		super(Config.construct, id, {
+		super(Config.getConstruct(), id, {
 			type: "Custom::BaselimeAlert",
 			properties: {
 				id,
-				ServiceToken: Config.serviceToken,
-				BaselimeApiKey: Config.baselimeSecret,
+				ServiceToken: Config.getServiceToken(),
+				BaselimeApiKey: Config.getApiKey(),
 				enabled: props.enabled,
 				Description: props.description,
 				Service: getServiceName(stack),
 				Parameters,
-				Channels: props.channels || Config.defaultChannel && [Config.defaultChannel],
+				Channels: props.channels || Config.getDefaultChannel() && [Config.getDefaultChannel()],
 				Origin: "cdk",
 			},
 		});

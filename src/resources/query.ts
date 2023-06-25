@@ -47,7 +47,7 @@ export class Query<TKey extends string> extends CfnResource {
 	id: string;
 	props: QueryProps<TKey>
 	constructor(id: string, props: QueryProps<TKey>) {
-		const stack = Stack.of(Config.construct);
+		const stack = Stack.of(Config.getConstruct());
 
 		const calcs = props.parameters.calculations;
 		const orderByOptions = calcs?.map(cal => getCalculationAlias(cal));
@@ -60,7 +60,7 @@ export class Query<TKey extends string> extends CfnResource {
 			throw Error("The orderBy must be present in the calculations / visualisations.")
 		}
 
-		if (!props.disableStackFilter || !Config.disableStackFilter) {
+		if (!props.disableStackFilter || !Config.getDisableStackFilter()) {
 			props.parameters.filters.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
 		}
 
@@ -78,12 +78,12 @@ export class Query<TKey extends string> extends CfnResource {
 			filterCombination: props.parameters.filterCombination || "AND",
 		};
 
-		super(Config.construct, id, {
+		super(Config.getConstruct(), id, {
 			type: "Custom::BaselimeQuery",
 			properties: {
 				id,
-				ServiceToken: Config.serviceToken,
-				BaselimeApiKey: Config.baselimeSecret,
+				ServiceToken: Config.getServiceToken(),
+				BaselimeApiKey: Config.getApiKey(),
 				Description: props.description,
 				Service: getServiceName(stack),
 				Parameters,
