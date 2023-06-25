@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.0.37] 2023-06-25
+### Added
+- Added inline docs to the Baselime configuration
+- Added support for multiple group bys in queries
+
 
 ## [0.0.36] 2023-05-23
 ### Added
