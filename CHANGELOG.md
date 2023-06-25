@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.0.38] 2023-06-25
+### Fixed
+- Fixed the type of a query group by to be optional
+
 ## [0.0.37] 2023-06-25
 ### Added
 - Added inline docs to the Baselime configuration
