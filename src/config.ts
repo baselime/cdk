@@ -24,10 +24,10 @@ interface BaselimeConfiguration {
 	readonly defaultChannel?: Channel;
 	/**
 	 * Wether or not to add a filter on stack name for all the queries created in this service
-	 * When `disableStackFilter` is set to `true`, all queries created in the service will have an additional filter:
+	 * When `disableStackFilter` is set to `true`, this filter is removed:
 	 * `$baselime.stackId = stackName`
 	 * 
-	 * @default - Defaults to true
+	 * @default - Defaults to false
 	 */
 	readonly disableStackFilter?: boolean;
 	/**

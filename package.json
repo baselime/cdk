@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist && tsc --build"
+    "build": "rm -rf dist && tsc --build",
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,8 @@
     "@types/node": "^18.16.1",
     "aws-cdk-lib": "^2.0.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.32.4"
   },
   "overrides": {
     "tsup": {

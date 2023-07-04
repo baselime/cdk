@@ -22,9 +22,13 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Build and publish to npm registry
+      - name: Run the tests
         run: |
           npm ci
+          npm run test
+
+      - name: Build and publish to npm registry
+        run: |
           npm run build
           npm publish --access public
         env:
