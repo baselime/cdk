@@ -135,5 +135,5 @@ export function exists(key: string) {
  *  @returns {Object} A filter operation object with the key, value, and operation properties.
  */
 export function notExists(key: string) {
-    return { key, operation: "NOT_EXISTS" } as const
+    return { key, operation: "DOES_NOT_EXIST" } as const
 }
