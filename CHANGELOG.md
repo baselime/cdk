@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - JSDocs for calculations
 
+## [0.0.40] 2023-07-04
+### Fixed
+
+- Bug in defaultStackFilter
 ## [0.0.39] 2023-06-25
 ### Fixed
 - Fixed potential TS errors

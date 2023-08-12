@@ -60,7 +60,9 @@ export class Query<TKey extends string> extends CfnResource {
 			throw Error("The orderBy must be present in the calculations / visualisations.")
 		}
 
-		if (!props.disableStackFilter || !Config.getDisableStackFilter()) {
+		const disableStackFilter = props.disableStackFilter || Config.getDisableStackFilter();
+		
+		if (!disableStackFilter) {
 			props.parameters.filters?.push({ operation: "=", key: "$baselime.stackId", value: stack.stackName })
 		}
 
