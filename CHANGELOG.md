@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 
-## [0.0.40] 2023-08-12
+## [0.0.41] 2023-08-12
 ### Fixed
 - Operation name for DOES_NOT_EXIST operation
 ### Added
