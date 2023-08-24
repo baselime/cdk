@@ -6,7 +6,6 @@ import { getServiceName } from "../utils/service-name";
 
 export class Dashboard extends CfnResource {
 	constructor(id: string, props: DashboardProps) {
-		const stack = Stack.of(Config.getConstruct());
 
 		const parameters = {
 			...props.parameters,
@@ -20,7 +19,7 @@ export class Dashboard extends CfnResource {
 				ServiceToken: Config.getServiceToken(),
 				BaselimeApiKey: Config.getApiKey(),
 				Description: props.description,
-				Service: getServiceName(stack),
+				Service: getServiceName(),
 				Parameters: parameters,
 				Origin: "cdk"
 			},

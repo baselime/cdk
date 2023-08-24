@@ -1,18 +1,21 @@
 import { Stack } from "aws-cdk-lib";
 import { Baselime as Config } from "../config";
 
-export function getServiceName(stack: Stack): string {
+export function getServiceName(): string {
   const s = Config.getServiceName();
   if (s) {
     return s;
   }
-  const tags = stack.tags.tagValues();
 
-  const isSST = Object.keys(tags).some((el) => el.includes("sst"));
+  const construct = Config.getConstruct();
+  const root = construct.node.root as any;
 
-  if (isSST) {
-    return `${tags['sst:stage']}-${tags['sst:app']}`;
+  const stage = root.stage;
+  const name = root.name;
+
+  if (stage && name) {
+    return `${stage}-${name}`;
   }
-
+  const stack = Stack.of(construct);
   return stack.stackName;
 }

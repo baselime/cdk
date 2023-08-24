@@ -87,7 +87,7 @@ export class Query<TKey extends string> extends CfnResource {
 				ServiceToken: Config.getServiceToken(),
 				BaselimeApiKey: Config.getApiKey(),
 				Description: props.description,
-				Service: getServiceName(stack),
+				Service: getServiceName(),
 				Parameters,
 				Origin: "cdk"
 			},
