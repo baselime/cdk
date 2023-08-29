@@ -30,7 +30,7 @@ npm i @baselime/cdk
 ```
 ## Usage
 
-Get your baselime api key from the dashboard or run `baselime iam` 
+Get your baselime api key from the [Baselime console](https://console.baselime.io) or using the [Baselime CLI](https://baselime.io/docs/cli/install) with the command `baselime iam`. 
 
 ```typescript
 // Initialize Config, you must do this in a construct before adding querys, alerts and dashboards.
@@ -70,7 +70,7 @@ query.addAlert({
 // Create Dashboard
 new baselime.Dashboard('ServiceHealth', {
   parameters: {
-    widgets: [{ query: query, }],
+    widgets: [{ query, type: WidgetType.TIMESERIES}],
   },
 });
 ```
