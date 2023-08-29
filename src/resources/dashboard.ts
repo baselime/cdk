@@ -3,7 +3,7 @@ import { Baselime as Config } from "../config";
 
 import { DashboardProps } from "../types/dashboard";
 import { getServiceName } from "../utils/service-name";
-
+export { WidgetType } from "../types/dashboard";
 export class Dashboard extends CfnResource {
 	constructor(id: string, props: DashboardProps) {
 

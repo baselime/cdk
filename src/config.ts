@@ -74,7 +74,7 @@ export namespace Baselime {
 		construct = target;
 		baselimeSecret = options.apiKey;
 		serviceName = options.serviceName;
-		serviceToken = `arn:aws:lambda:${options.region || process.env.CDK_DEPLOY_REGION || "eu-west-1"
+		serviceToken = `arn:aws:lambda:${options.region || process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION || "eu-west-1"
 			}:${options._account || "097948374213"}:function:baselime-orl-cloudformation`;
 		defaultChannel = options.defaultChannel;
 		disableStackFilter = options.disableStackFilter;
