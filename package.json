@@ -1,6 +1,6 @@
 {
   "name": "@baselime/cdk",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "Define your observability as code using the AWS CDK",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
