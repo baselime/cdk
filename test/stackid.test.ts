@@ -9,7 +9,7 @@ describe('stack id', () => {
     test('stackId is added by default', () => {
         const app = new cdk.App();
         const stack = new cdk.Stack(app, 'TestStack');
-        
+
         baselime.Baselime.init(stack, {
             apiKey: 'xxxx',
         });
@@ -25,8 +25,16 @@ describe('stack id', () => {
         template.hasResourceProperties("Custom::BaselimeQuery", {
             Parameters: {
                 filters: [
-                    "timestamp > 1234",
-                    "$baselime.stackId = TestStack"
+                    {
+                        "key": "timestamp",
+                        "operation": ">",
+                        "value": 1234
+                    },
+                    {
+                        "key": "$baselime.stackId",
+                        "operation": "=",
+                        "value": "TestStack"
+                    }
                 ]
             }
         })
@@ -36,7 +44,7 @@ describe('stack id', () => {
     test('stackId is not added if parameter is set on init', () => {
         const app = new cdk.App();
         const stack = new cdk.Stack(app, 'TestStack');
-        
+
         baselime.Baselime.init(stack, {
             apiKey: 'xxxx',
             disableStackFilter: true,
@@ -53,7 +61,11 @@ describe('stack id', () => {
         template.hasResourceProperties("Custom::BaselimeQuery", {
             Parameters: {
                 filters: [
-                    "timestamp > 1234",
+                    {
+                        "key": "timestamp",
+                        "operation": ">",
+                        "value": 1234
+                    }
                 ]
             }
         })
@@ -62,7 +74,7 @@ describe('stack id', () => {
     test('stackId is not added if parameter is set on query', () => {
         const app = new cdk.App();
         const stack = new cdk.Stack(app, 'TestStack');
-        
+
         baselime.Baselime.init(stack, {
             apiKey: 'xxxx',
         });
@@ -79,7 +91,11 @@ describe('stack id', () => {
         template.hasResourceProperties("Custom::BaselimeQuery", {
             Parameters: {
                 filters: [
-                    "timestamp > 1234",
+                    {
+                        "key": "timestamp",
+                        "operation": ">",
+                        "value": 1234
+                    }
                 ]
             }
         })
