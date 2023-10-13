@@ -123,20 +123,4 @@ type CountCalculation<TKey> = {
 	key?: never;
 };
 
-export type DeploymentQueryParameters = {
-	datasets: string[];
-	calculations?: string[];
-	filterCombination: "AND" | "OR";
-	filters?: string[];
-	groupBys?: QueryGroupBy[];
-	orderBy?: {
-		value: string;
-		order?: "ASC" | "DESC";
-	};
-	limit?: number;
-	needle?: {
-		value: string;
-		isRegex?: boolean;
-		matchCase?: boolean;
-	}
-};
+export type DeploymentQueryParameters = QueryParameters<string>;

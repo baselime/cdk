@@ -7,16 +7,15 @@ import { getServiceName } from "../utils/service-name";
 export class Alert<TKey extends string> extends CfnResource {
 
 	constructor(id: string, props: AlertProps<TKey>) {
-		const defaultFrequency = "1hour";
-		const defaultWindow = "1hour";
+		const defaultFrequency = "1h";
+		const defaultWindow = "1h";
 
 		let Parameters: DeploymentAlertParameters | undefined = undefined;
 
 		if ("ref" in props.parameters.query) {
 			Parameters = {
 				...props.parameters,
-				threshold: `${props.parameters.threshold?.operation || ">"} ${props.parameters.threshold?.value
-					}`,
+				threshold: props.parameters.threshold || { operation: "=", value: 0 },
 				query: props.parameters.query.ref,
 				frequency: props.parameters.frequency || defaultFrequency,
 				window: props.parameters.window || defaultWindow,
@@ -35,8 +34,7 @@ export class Alert<TKey extends string> extends CfnResource {
 
 			Parameters = {
 				...props.parameters,
-				threshold: `${props.parameters.threshold?.operation || ">"} ${props.parameters.threshold?.value || 0
-					}`,
+				threshold: props.parameters.threshold || { operation: "=", value: 0 },
 				query: query.ref,
 				frequency: props.parameters.frequency || defaultFrequency,
 				window: props.parameters.window || defaultWindow,

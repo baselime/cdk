@@ -22,7 +22,10 @@ type ChannelTypes = "slack" | "webhook" | "email";
 
 export type DeploymentAlertParameters = {
 	query: string;
-	threshold: string;
+	threshold: {
+		operation?: QueryOperationString,
+		value: string | number
+	};
 	frequency: string;
 	window: string;
 };
