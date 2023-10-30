@@ -2,7 +2,6 @@ import { CfnResource, Stack } from "aws-cdk-lib";
 import { Baselime as Config } from "../config";
 import { Query } from "./query";
 import { AlertProps, DeploymentAlertParameters } from "../types/alert";
-import { getServiceName } from "../utils/service-name";
 
 export class Alert<TKey extends string> extends CfnResource {
 
@@ -51,7 +50,6 @@ export class Alert<TKey extends string> extends CfnResource {
 				BaselimeApiKey: Config.getApiKey(),
 				enabled: props.enabled,
 				Description: props.description,
-				Service: getServiceName(),
 				Parameters,
 				Channels: props.channels || Config.getDefaultChannel() && [Config.getDefaultChannel()],
 				Origin: "cdk",

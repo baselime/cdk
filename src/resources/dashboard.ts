@@ -2,7 +2,6 @@ import { CfnResource, Stack } from "aws-cdk-lib";
 import { Baselime as Config } from "../config";
 
 import { DashboardProps } from "../types/dashboard";
-import { getServiceName } from "../utils/service-name";
 export { WidgetType } from "../types/dashboard";
 export class Dashboard extends CfnResource {
 	constructor(id: string, props: DashboardProps) {
@@ -19,7 +18,6 @@ export class Dashboard extends CfnResource {
 				ServiceToken: Config.getServiceToken(),
 				BaselimeApiKey: Config.getApiKey(),
 				Description: props.description,
-				Service: getServiceName(),
 				Parameters: parameters,
 				Origin: "cdk"
 			},

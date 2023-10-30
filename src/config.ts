@@ -13,17 +13,11 @@ interface BaselimeConfiguration {
 	 */
 	readonly region?: string;
 	/**
-	 * The name of this service.
-	 * 
-	 * @default - Defaults to the CDK stack name
-	 */
-	readonly serviceName?: string;
-	/**
-	 * The channel to send all the alerts for this service by default.
+	 * The channel to send all the alerts by default.
 	 */
 	readonly defaultChannel?: Channel;
 	/**
-	 * Wether or not to add a filter on stack name for all the queries created in this service
+	 * Wether or not to add a filter on stack name to all the queries
 	 * When `disableStackFilter` is set to `true`, this filter is removed:
 	 * `$baselime.stackId = stackName`
 	 * 
@@ -42,7 +36,6 @@ interface BaselimeConfiguration {
 export namespace Baselime {
 	let construct: Construct;
 	let baselimeSecret: string;
-	let serviceName: string | undefined;
 	let serviceToken: string;
 	let defaultChannel: Channel | undefined;
 	let disableStackFilter: boolean | undefined;
@@ -63,8 +56,7 @@ export namespace Baselime {
 	 *
 	 *     Baselime.init(this, {
 	 *       apiKey: process.env.BASELIME_API_KEY, // Ideally use SSM or Secrets Manager
-	 *       serviceName: 'my-service',
-	 *		 defaultChannel: { type: "slack", targets: ["baselime-alerts"] },
+	 *		   defaultChannel: { type: "slack", targets: ["baselime-alerts"] },
 	 *     });
 	 */
 	export function init(
@@ -73,7 +65,6 @@ export namespace Baselime {
 	) {
 		construct = target;
 		baselimeSecret = options.apiKey;
-		serviceName = options.serviceName;
 		serviceToken = `arn:aws:lambda:${options.region || process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION || "eu-west-1"
 			}:${options._account || "097948374213"}:function:baselime-orl-cloudformation`;
 		defaultChannel = options.defaultChannel;
@@ -86,10 +77,6 @@ export namespace Baselime {
 
 	export function getApiKey() {
 		return baselimeSecret;
-	}
-
-	export function getServiceName() {
-		return serviceName;
 	}
 
 	export function getServiceToken() {

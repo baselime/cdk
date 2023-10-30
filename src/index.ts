@@ -1,7 +1,6 @@
 
 export interface QueryProps {
 	Description?: string;
-	Service?: string;
 	Parameters: {
 		datasets: string[];
 		calculations?: string[];

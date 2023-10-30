@@ -4,7 +4,6 @@ import { Baselime as Config } from "../config";
 import { QueryProps, Filter, DeploymentQueryParameters } from "../types/query";
 import { AlertProps } from "../types/alert";
 import { Alert } from './alert';
-import { getServiceName } from '../utils/service-name';
 
 
 function hasDuplicates<T>(array: T[]) {
@@ -69,7 +68,6 @@ export class Query<TKey extends string> extends CfnResource {
 				ServiceToken: Config.getServiceToken(),
 				BaselimeApiKey: Config.getApiKey(),
 				Description: props.description,
-				Service: getServiceName(),
 				Parameters,
 				Origin: "cdk"
 			},
